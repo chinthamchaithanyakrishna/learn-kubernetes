@@ -10,10 +10,10 @@ spec:
         - name: empty-dir
           mountPath: /opt
     - name: nginx
-      image: ngnix
+      image: nginx
       volumeMounts:
         - name: empty-dir
-          mountPath: /usr/share/ngnix/html
+          mountPath: /usr/share/nginx/html
   volumes:
     - name: empty-dir
       emptyDir: {}
