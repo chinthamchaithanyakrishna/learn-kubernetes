@@ -1,0 +1,85 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend
+data:
+  CATALOGUE_HOST : "catalogue-dev.chaithanya.online"
+  CATALOGUE_PORT : "8080"
+  USER_HOST      : "user-dev.chaithanya.online"
+  USER_PORT      : "8080"
+  CART_HOST      : "cart-dev.chaithanya.online"
+  CART_PORT      : "8080"
+  SHIPPING_HOST  : "shipping-dev.chaithanya.online"
+  SHIPPING_PORT  : "8080"
+  PAYMENT_HOST   : "payment-dev.chaithanya.online"
+  PAYMENT_PORT   : "8080"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: catalogue
+data:
+  MONGO : "true"
+  MONGO_URL : "mongodb://mongodb-dev.chaithanya.online:27017/catalogue"
+  DB_TYPE     : "mongo"
+  APP_GIT_URL : "https://github.com/roboshop-devops-project-v3/catalogue"
+  DB_HOST     : "mongodb-dev.chaithanya.online"
+  SCHEMA_FILE : "db/master-data.js"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: user
+data:
+  MONGO : "true"
+  REDIS_URL : "redis://redis-dev.chaithanya.online:6379"
+  MONGO_URL : "mongodb://mongodb-dev.chaithanya.online:27017/users"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql
+data:
+  ROOT_PASSWORD : "RoboShop@1"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql
+data:
+  REDIS_HOST : "redis-dev.chaithanya.online"
+  CATALOGUE_HOST : "catalogue-dev.chaithanya.online"
+  CATALOGUE_PORT : 8080
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rabbitmq
+data:
+  APP_USER:"roboshop"
+  APP_PASSWORD:"roboshop123"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shipping
+data:
+  CART_ENDPOINT: "cart-dev.chaithanya.online:8080"
+  DB_HOST: "mysql-dev.chaithanya.online"
+  DB_USER: "root"
+  DB_PASS: "RoboShop@1"
+  DB_TYPE       : "mysql"
+  APP_GIT_URL   : "https://github.com/roboshop-devops-project-v3/shipping"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shipping
+data:
+  CART_HOST: "cart-dev.chaithanya.online"
+  CART_PORT: 8080
+  USER_HOST: "user-dev.chaithanya.online"
+  USER_PORT: 8080
+  AMQP_HOST: "rabbitmq-dev.chaithanya.online"
+  AMQP_USER: "roboshop"
+  AMQP_PASS: "roboshop123"
