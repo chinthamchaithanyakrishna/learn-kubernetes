@@ -21,9 +21,20 @@ spec:
         - name: frontend
           image: public.ecr.aws/w8x4g9h7/roboshop-v3/frontend
           envFrom:
-          - configMapRef:
+            - configMapRef:
                 name: frontend
-
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 5
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -50,6 +61,18 @@ spec:
           envFrom:
             - configMapRef:
                 name: cart
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -76,6 +99,18 @@ spec:
           envFrom:
             - configMapRef:
                 name: catalogue
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -102,6 +137,18 @@ spec:
           envFrom:
             - configMapRef:
                 name: user
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -128,6 +175,18 @@ spec:
           envFrom:
             - configMapRef:
                 name: shipping
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -154,6 +213,18 @@ spec:
           envFrom:
             - configMapRef:
                 name: payment
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
 ---
 apiVersion: batch/v1
 kind: Job
@@ -167,7 +238,7 @@ spec:
           image: public.ecr.aws/w8x4g9h7/roboshop-v3/schema-load
           env:
             - name: SCHEMA_FILE
-              value: db/master-data.sql
+              value: db/master-data.js
           envFrom:
             - configMapRef:
                 name: catalogue
@@ -196,25 +267,6 @@ spec:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: shipping-schema
-spec:
-  template:
-    spec:
-      containers:
-        - name: schema
-          image: public.ecr.aws/w8x4g9h7/roboshop-v3/schema-load
-          env:
-            - name: SCHEMA_FILE
-              value: db/schema.sql
-          envFrom:
-            - configMapRef:
-                name: shipping
-      restartPolicy: Never
-  backoffLimit: 0
----
-apiVersion: batch/v1
-kind: Job
-metadata:
   name: shipping-master-data
 spec:
   template:
@@ -230,4 +282,32 @@ spec:
                 name: shipping
       restartPolicy: Never
   backoffLimit: 0
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: shipping-schema
+spec:
+  template:
+    spec:
+      containers:
+        - name: schema
+          image: public.ecr.aws/w8x4g9h7/roboshop-v3/schema-load
+          env:
+            - name: SCHEMA_FILE
+              value: db/schema.sql
+          envFrom:
+            - configMapRef:
+                name: shipping
+      restartPolicy: Never
+  backoffLimit: 0
+
+
+
+
+
+
+
+
+
 
