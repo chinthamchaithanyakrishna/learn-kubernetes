@@ -4,7 +4,7 @@ metadata:
   name: nginx-01
 spec:
   nodeSelector:
-    node for: demo
+    nodefor: demo
   containers:
     - name: nginx
       image: nginx:1.14.2
